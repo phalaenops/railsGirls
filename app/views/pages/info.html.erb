@@ -1,0 +1,32 @@
+<h1>Pages#info</h1>
+<p>恵比寿ガーデンプレイス周辺の地図です</p>
+
+<div id="canvas" style="width:500px; height:400px"></div>
+<p><%= link_to 'トップに戻る', ideas_path %></p>
+<script type="text/javascript" src="http://www.openlayers.org/api/OpenLayers.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var map = new OpenLayers.Map("canvas");
+        var mapnik = new OpenLayers.Layer.OSM();
+        map.addLayer(mapnik);
+
+        var lonLat = new OpenLayers.LonLat(139.71377, 35.642558)
+            .transform(
+                new OpenLayers.Projection("EPSG:4326"),
+                new OpenLayers.Projection("EPSG:900913")
+            );
+        map.setCenter(lonLat, 15);
+
+        var markers = new OpenLayers.Layer.Markers("Markers");
+        map.addLayer(markers);
+        var marker = new OpenLayers.Marker(
+            new OpenLayers.LonLat(139.71377, 35.642558)
+                .transform(
+                    new OpenLayers.Projection("EPSG:4326"),
+                    new OpenLayers.Projection("EPSG:900913")
+                )
+        );
+        markers.addMarker(marker);
+
+    });
+</script>
